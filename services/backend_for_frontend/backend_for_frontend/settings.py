@@ -135,3 +135,6 @@ STATICFILES_DIRS = [
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
+#
+
+SINGLE_USE_ADMIN_SECRET_KEY = 'erfvGJKGHJbKJHV'
