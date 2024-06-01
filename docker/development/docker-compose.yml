@@ -1,0 +1,51 @@
+services:
+  # ---------------------------------------------------------------------------
+  # LoanAPI
+  # ---------------------------------------------------------------------------
+  loan-api-backend-for-frontend:
+    container_name: ${BACKEND_FOR_FRONTEND_HOST}
+    image: loan_api_backend_for_frontend
+    build:
+      context: ../../services/backend_for_frontend
+      dockerfile: ../../docker/build/backend_for_frontend/Dockerfile
+      target: development
+    environment:
+      - DJANGO_MICROSERVICES_SECRET_KEY=${DJANGO_MICROSERVICES_SECRET_KEY}
+      # backend for frontend
+      - POSTGRES_BACKEND_FOR_FRONTEND_USER=${POSTGRES_BACKEND_FOR_FRONTEND_USER}
+      - POSTGRES_BACKEND_FOR_FRONTEND_PASSWORD=${POSTGRES_BACKEND_FOR_FRONTEND_PASSWORD}
+      - POSTGRES_BACKEND_FOR_FRONTEND_HOST=${POSTGRES_BACKEND_FOR_FRONTEND_HOST}
+      - POSTGRES_BACKEND_FOR_FRONTEND_HOSTNAME=${POSTGRES_BACKEND_FOR_FRONTEND_HOST}
+      - POSTGRES_BACKEND_FOR_FRONTEND_DATABASE_NAME=${POSTGRES_BACKEND_FOR_FRONTEND_DATABASE_NAME}
+      - POSTGRES_BACKEND_FOR_FRONTEND_PORT=${POSTGRES_BACKEND_FOR_FRONTEND_PORT}
+    ports:
+      - "${BACKEND_FOR_FRONTEND_PORT}:80"
+    volumes:
+      - ../../services/backend_for_frontend:/home/app
+    networks:
+      loan_api:
+        aliases:
+          - ${BACKEND_FOR_FRONTEND_HOST}
+
+  loan_api-postgres-backend-for-frontend:
+    container_name: ${POSTGRES_BACKEND_FOR_FRONTEND_HOST}
+    image: postgres:16.2-alpine
+    environment:
+      - POSTGRES_USER=${POSTGRES_BACKEND_FOR_FRONTEND_USER}
+      - POSTGRES_PASSWORD=${POSTGRES_BACKEND_FOR_FRONTEND_PASSWORD}
+      - POSTGRES_DB=${POSTGRES_BACKEND_FOR_FRONTEND_DATABASE_NAME}
+    ports:
+      - "${POSTGRES_BACKEND_FOR_FRONTEND_PORT}:5432"
+    volumes:
+      - loan_api_backend_for_frontend:/var/lib/postgresql/data
+    networks:
+      loan_api:
+        aliases:
+          - ${POSTGRES_BACKEND_FOR_FRONTEND_HOST}
+
+networks:
+  loan_api:
+    driver: bridge
+
+volumes:
+  loan_api_backend_for_frontend:
