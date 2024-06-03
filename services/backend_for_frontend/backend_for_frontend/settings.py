@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 
     'rest_framework',
+    'rest_framework_api_key',
 
     'backend_for_frontend.apps.BackendForFrontendConfig',
     'loan.apps.LoanConfig',
@@ -135,6 +136,21 @@ STATICFILES_DIRS = [
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
+
 #
 
-SINGLE_USE_ADMIN_SECRET_KEY = 'erfvGJKGHJbKJHV'
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework.authentication.SessionAuthentication',
+        'rest_framework.authentication.BasicAuthentication',
+        'backend_for_frontend.authentication.APIKeyAuthentication',
+    ],
+    'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework_api_key.permissions.HasAPIKey',
+    ],
+}
+
+
+# 
+
+SINGLE_USE_CREATE_CUSTOMER_SECRET_KEY = 'erfvGJKGHJbKJHV'

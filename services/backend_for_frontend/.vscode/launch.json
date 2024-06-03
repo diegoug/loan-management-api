@@ -34,7 +34,8 @@
             "args": [
                 "test",
             ],
-            "django": true
+            "django": true,
+            "justMyCode": false
         }
     ]
 }
