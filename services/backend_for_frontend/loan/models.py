@@ -47,7 +47,7 @@ class Loan(models.Model):
 class Payment(models.Model):
     external_id = models.CharField(max_length=60, unique=True)
     total_amount = models.DecimalField(max_digits=20, decimal_places=10)
-    status = models.SmallIntegerField(choices=PAYMENT_STATUS_CHOICES)
+    status = models.SmallIntegerField(choices=PAYMENT_STATUS_CHOICES, default=1)
     paid_at = models.DateTimeField()
     customer = models.ForeignKey(Customer, on_delete=models.CASCADE)
     created_at = models.DateTimeField(auto_now_add=True)

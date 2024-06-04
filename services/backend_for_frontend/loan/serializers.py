@@ -11,6 +11,7 @@ class LoanSerializer(serializers.ModelSerializer):
     class Meta:
         model = Loan
         fields = '__all__'
+        read_only_fields = ['status', 'outstanding']
 
 class PaymentSerializer(serializers.ModelSerializer):
     class Meta:
@@ -21,6 +22,7 @@ class PaymentDetailSerializer(serializers.ModelSerializer):
     class Meta:
         model = PaymentDetail
         fields = '__all__'
+        read_only_fields = ['status']
 
 class CustomerBalanceSerializer(serializers.ModelSerializer):
     total_debt = serializers.SerializerMethodField()
