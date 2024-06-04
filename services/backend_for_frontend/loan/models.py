@@ -1,7 +1,5 @@
-# loans/models.py
 from django.db import models
 
-# Definición de choices reutilizables
 CUSTOMER_STATUS_CHOICES = [
     (1, 'Active'),
     (2, 'Inactive'),
@@ -18,6 +16,7 @@ PAYMENT_STATUS_CHOICES = [
     (1, 'Completed'),
     (2, 'Rejected'),
 ]
+
 
 class Customer(models.Model):
     external_id = models.CharField(max_length=60, unique=True)

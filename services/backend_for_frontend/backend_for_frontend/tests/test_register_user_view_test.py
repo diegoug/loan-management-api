@@ -18,7 +18,6 @@ class RegisterUserViewTest(TestCase):
             'password': 'adminpassword'
         }
 
-        # Create an admin user via the view
         response = self.client.post(self.register_admin_url, data=self.admin_payload)
         self.admin_api_key = json.loads(response.content)['api_key']
         self.client.credentials(HTTP_AUTHORIZATION='Api-Key ' + self.admin_api_key)
@@ -47,7 +46,6 @@ class RegisterUserViewTest(TestCase):
         self.assertIn('api_key', response_data)
 
     def test_user_cannot_create_admin(self):
-        # Create a normal user via the view
         user_payload = {
             'username': 'user',
             'password': 'userpassword'
